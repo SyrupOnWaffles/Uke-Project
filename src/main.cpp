@@ -42,9 +42,7 @@ int main()
 };
 
    ALLEGRO_BITMAP *uke = al_load_bitmap("images/uke.png");
-   ALLEGRO_BITMAP *hand = al_load_bitmap("images/hand.png");
    test_init(uke, "uke");
-   test_init(hand, "hand");
 
    al_register_event_source(queue, al_get_keyboard_event_source());
    al_register_event_source(queue, al_get_mouse_event_source());
@@ -180,8 +178,7 @@ int main()
       if (redraw && al_is_event_queue_empty(queue))
       {
          al_clear_to_color(al_map_rgb(99, 155, 255));
-         // Hand
-         al_draw_bitmap(hand, 275 + mean * 40, 245, 0);
+         
          al_draw_scaled_bitmap(uke, 0, 0, 900, 750, 10, 100, 1200, 1000, 1);
 
          // Draw Strings
@@ -190,10 +187,12 @@ int main()
          al_draw_ellipse(650, 323, 355, .1, al_map_rgb(69, 40, 60), 3);
          al_draw_ellipse(650, 343, 355, .1, al_map_rgb(69, 40, 60), 3);
 
+         //Fret Markers
          al_draw_filled_circle(275 + one * 40, 283, 10, al_map_rgb(172, 50, 50));
          al_draw_filled_circle(275 + two * 40, 303, 10, al_map_rgb(172, 50, 50));
          al_draw_filled_circle(275 + three * 40, 323, 10, al_map_rgb(172, 50, 50));
          al_draw_filled_circle(275 + four * 40, 343, 10, al_map_rgb(172, 50, 50));
+
 
          al_flip_display();
 
@@ -203,7 +202,6 @@ int main()
 
    // Destruction
    al_destroy_bitmap(uke);
-   al_destroy_bitmap(hand);
    al_destroy_font(font);
    al_destroy_display(disp);
    al_destroy_timer(timer);
