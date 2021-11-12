@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/syrup/Desktop/Programming/C++/Uke-Project/build",
-  "command": "/bin/c++ -O3 -DNDEBUG -o CMakeFiles/ukulele.dir/src/main.cpp.o -c /home/syrup/Desktop/Programming/C++/Uke-Project/src/main.cpp",
-  "file": "/home/syrup/Desktop/Programming/C++/Uke-Project/src/main.cpp"
-}
-]
