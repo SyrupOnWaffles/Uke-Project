@@ -5,8 +5,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include<string>
-#include<sstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 #define log(x) cout << x;
@@ -65,63 +65,74 @@ int main()
    int four;
    int x;
    int y;
+   bool fourPlaying;
+   bool threePlaying;
+   bool twoPlaying;
+   bool onePlaying;
+
    al_start_timer(timer);
    while (1)
    {  
       
       float mean = ((one + two + three + four) / 4) - 1;
-      one = 0;
-      two = 0;
-      three = 0;
-      four = 0;
+      fourPlaying = false;
+      threePlaying = false;
+      twoPlaying = false;
+      onePlaying = false;
+      
       al_wait_for_event(queue, &event);
       
       switch(event.type)
         {
+            
             case ALLEGRO_EVENT_TIMER:
+               one = 0;
+               two = 0;
+               three = 0;
+               four = 0;
                //yandere dev be like
-               // if(key[ALLEGRO_KEY_Z])
-               //    four = 1;
-               // if(key[ALLEGRO_KEY_X])
-               //    four = 2;
-               // if(key[ALLEGRO_KEY_C])
-               //    four = 3;
-               // if(key[ALLEGRO_KEY_V])
-               //    four = 4;
-               // if(key[ALLEGRO_KEY_B])
-               //    four = 5;
-               // if(key[ALLEGRO_KEY_N])
-               //    four = 6;
-               // if(key[ALLEGRO_KEY_M])
-               //    four = 7;
-               // if(key[ALLEGRO_KEY_A])
-               //    three = 1;
-               // if(key[ALLEGRO_KEY_S])
-               //    three = 2;
-               // if(key[ALLEGRO_KEY_D])
-               //    three = 3;
-               // if(key[ALLEGRO_KEY_F])
-               //    three = 4;
-               // if(key[ALLEGRO_KEY_G])
-               //    three = 5;
-               // if(key[ALLEGRO_KEY_H])
-               //    three = 6;
-               // if(key[ALLEGRO_KEY_J])
-               //    three = 7;
-               // if(key[ALLEGRO_KEY_Q])
-               //    two = 1;
-               // if(key[ALLEGRO_KEY_W])
-               //    two = 2;
-               // if(key[ALLEGRO_KEY_E])
-               //    two = 3;
-               // if(key[ALLEGRO_KEY_R])
-               //    two = 4;
-               // if(key[ALLEGRO_KEY_T])
-               //    two = 5;
-               // if(key[ALLEGRO_KEY_Y])
-               //    two = 6;
-               // if(key[ALLEGRO_KEY_U])
-               //    two = 7;
+               if(key[ALLEGRO_KEY_Z])
+                  four = 1;
+               if(key[ALLEGRO_KEY_X])
+                  four = 2;
+               if(key[ALLEGRO_KEY_C])
+                  four = 3;
+               if(key[ALLEGRO_KEY_V])
+                  four = 4;
+               if(key[ALLEGRO_KEY_B])
+                  four = 5;
+               if(key[ALLEGRO_KEY_N])
+                  four = 6;
+               if(key[ALLEGRO_KEY_M])
+                  four = 7;
+               if(key[ALLEGRO_KEY_A])
+                  three = 1;
+               if(key[ALLEGRO_KEY_S])
+                  three = 2;
+               if(key[ALLEGRO_KEY_D])
+                  three = 3;
+               if(key[ALLEGRO_KEY_F])
+                  three = 4;
+               if(key[ALLEGRO_KEY_G])
+                  three = 5;
+               if(key[ALLEGRO_KEY_H])
+                  three = 6;
+               if(key[ALLEGRO_KEY_J])
+                  three = 7;
+               if(key[ALLEGRO_KEY_Q])
+                  two = 1;
+               if(key[ALLEGRO_KEY_W])
+                  two = 2;
+               if(key[ALLEGRO_KEY_E])
+                  two = 3;
+               if(key[ALLEGRO_KEY_R])
+                  two = 4;
+               if(key[ALLEGRO_KEY_T])
+                  two = 5;
+               if(key[ALLEGRO_KEY_Y])
+                  two = 6;
+               if(key[ALLEGRO_KEY_U])
+                  two = 7;
                if(key[ALLEGRO_KEY_1])
                   one = 1;
                if(key[ALLEGRO_KEY_2])
@@ -154,18 +165,11 @@ int main()
             case ALLEGRO_EVENT_MOUSE_AXES:
                x = event.mouse.x;
                y = event.mouse.y;
-               if(y == 283 && x > 300 && x < 1000){
-                  al_play_sample(noteSamples[0], 1.0, 0.0, 1.0 + (0.05946 * one), ALLEGRO_PLAYMODE_ONCE, NULL);
-               }
-               if(y == 303 && x > 300 && x < 1000){
-                  al_play_sample(noteSamples[1], 1.0, 0.0, 1.0 + (0.05946 * two), ALLEGRO_PLAYMODE_ONCE, NULL);
-               }
-               if(y == 323 && x > 300 && x < 1000){
-                  al_play_sample(noteSamples[2], 1.0, 0.0, 1.0 + (0.05946 * three), ALLEGRO_PLAYMODE_ONCE, NULL);
-               }
-               if(y == 343 && x > 300 && x < 1000){
-                  al_play_sample(noteSamples[3], 1.0, 0.0, 1.0 + (0.05946 * four), ALLEGRO_PLAYMODE_ONCE, NULL);
-               }          
+               if(y == 283 && x > 300 && x < 1000) onePlaying = true;   
+               if(y == 303 && x > 300 && x < 1000) twoPlaying = true; 
+               if(y == 323 && x > 300 && x < 1000) threePlaying = true;
+               if(y == 343 && x > 300 && x < 1000)fourPlaying = true;
+                       
                   
                break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
@@ -173,7 +177,12 @@ int main()
                 break;
            
         }
-            
+      if(fourPlaying) al_play_sample(noteSamples[3], 1.0, 0.0, 1.0 + (0.05946 * four), ALLEGRO_PLAYMODE_ONCE, NULL);
+      if(threePlaying) al_play_sample(noteSamples[2], 1.0, 0.0, 1.0 + (0.05946 * three), ALLEGRO_PLAYMODE_ONCE, NULL);      
+      if(twoPlaying) al_play_sample(noteSamples[1], 1.0, 0.0, 1.0 + (0.05946 * two), ALLEGRO_PLAYMODE_ONCE, NULL);      
+      if(onePlaying) al_play_sample(noteSamples[0], 1.0, 0.0, 1.0 + (0.05946 * one), ALLEGRO_PLAYMODE_ONCE, NULL);
+      log(four << three << two << one << endl);
+
       if (done)
          break;
 
