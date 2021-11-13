@@ -45,7 +45,8 @@ int main()
 
    ALLEGRO_BITMAP *uke = al_load_bitmap("images/uke.png");
    test_init(uke, "uke");
-
+   ALLEGRO_BITMAP *hand = al_load_bitmap("images/hand.png");
+   test_init(hand, "hand");
    al_register_event_source(queue, al_get_keyboard_event_source());
    al_register_event_source(queue, al_get_display_event_source(disp));
    al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -69,7 +70,7 @@ int main()
    bool threePlaying;
    bool twoPlaying;
    bool onePlaying;
-
+   al_hide_mouse_cursor(disp);
    al_start_timer(timer);
    while (1)
    {  
@@ -180,8 +181,6 @@ int main()
       if(threePlaying) al_play_sample(noteSamples[2], 1.0, 0.0, 1.0 + (0.05946 * three), ALLEGRO_PLAYMODE_ONCE, NULL);      
       if(twoPlaying) al_play_sample(noteSamples[1], 1.0, 0.0, 1.0 + (0.05946 * two), ALLEGRO_PLAYMODE_ONCE, NULL);      
       if(onePlaying) al_play_sample(noteSamples[0], 1.0, 0.0, 1.0 + (0.05946 * one), ALLEGRO_PLAYMODE_ONCE, NULL);
-      log(four << three << two << one << endl);
-
       if (done)
          break;
 
@@ -204,7 +203,7 @@ int main()
          al_draw_filled_circle(275 + three * 40, 323, 10, al_map_rgb(172, 50, 50));
          al_draw_filled_circle(275 + four * 40, 343, 10, al_map_rgb(172, 50, 50));
 
-         al_draw_filled_circle(x, y, 10, al_map_rgb(131, 188, 255));
+         al_draw_bitmap(hand, x, y,0);
 
          std::stringstream ss;
          ss << four << three << two << one;
@@ -222,6 +221,7 @@ int main()
 
    // Destruction
    al_destroy_bitmap(uke);
+   al_destroy_bitmap(hand);
    al_destroy_font(font);
    al_destroy_display(disp);
    al_destroy_timer(timer);
