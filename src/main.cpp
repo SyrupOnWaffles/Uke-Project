@@ -78,8 +78,7 @@ int main()
       fourPlaying = false;
       threePlaying = false;
       twoPlaying = false;
-      onePlaying = false;
-      
+      onePlaying = false;   
       al_wait_for_event(queue, &event);
       
       switch(event.type)
