@@ -63,6 +63,7 @@ int main()
    int two;
    int three;
    int four;
+   int prevUp;
    int x = 1280;
    int y = 720;
    bool fourPlaying;
@@ -100,6 +101,12 @@ int main()
             four = 6;
          if (key[ALLEGRO_KEY_M])
             four = 7;
+         if (key[ALLEGRO_KEY_COMMA])
+            four = 8;
+         if (key[ALLEGRO_KEY_FULLSTOP])
+            four = 9;
+         if (key[ALLEGRO_KEY_SLASH])
+            four = 10;
          if (key[ALLEGRO_KEY_A])
             three = 1;
          if (key[ALLEGRO_KEY_S])
@@ -114,6 +121,12 @@ int main()
             three = 6;
          if (key[ALLEGRO_KEY_J])
             three = 7;
+         if (key[ALLEGRO_KEY_K])
+            three = 8;
+         if (key[ALLEGRO_KEY_L])
+            three = 9;
+         if (key[ALLEGRO_KEY_SEMICOLON])
+            three = 10;
          if (key[ALLEGRO_KEY_Q])
             two = 1;
          if (key[ALLEGRO_KEY_W])
@@ -128,6 +141,12 @@ int main()
             two = 6;
          if (key[ALLEGRO_KEY_U])
             two = 7;
+         if (key[ALLEGRO_KEY_I])
+            two = 8;
+         if (key[ALLEGRO_KEY_O])
+            two = 9;
+         if (key[ALLEGRO_KEY_P])
+            two = 10;
          if (key[ALLEGRO_KEY_1])
             one = 1;
          if (key[ALLEGRO_KEY_2])
@@ -142,6 +161,13 @@ int main()
             one = 6;
          if (key[ALLEGRO_KEY_7])
             one = 7;
+         if (key[ALLEGRO_KEY_8])
+            one = 8;
+         if (key[ALLEGRO_KEY_9])
+            one = 9;
+         if (key[ALLEGRO_KEY_0])
+            one = 10;
+            
          if (key[ALLEGRO_KEY_ESCAPE])
             done = true;
          for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
@@ -160,24 +186,26 @@ int main()
       case ALLEGRO_EVENT_MOUSE_AXES:
          x = event.mouse.x;
          y = event.mouse.y;
-         // terrible collision (is this even collision detection?)
-         if (y == 283 && x > 300 && x < 1000)
-         {
-            onePlaying = true;
+         if(prevUp != y){
+            // terrible collision (is this even collision detection?)
+            if (y == 283 && x > 300 && x < 1000)
+            {
+               onePlaying = true;
+            }
+            if (y == 303 && x > 300 && x < 1000)
+            {
+               twoPlaying = true;
+            }
+            if (y == 323 && x > 300 && x < 1000)
+            {
+               threePlaying = true;
+            }
+            if (y == 343 && x > 300 && x < 1000)
+            {
+               fourPlaying = true;
+            }
          }
-         if (y == 303 && x > 300 && x < 1000)
-         {
-            twoPlaying = true;
-         }
-         if (y == 323 && x > 300 && x < 1000)
-         {
-            threePlaying = true;
-         }
-         if (y == 343 && x > 300 && x < 1000)
-         {
-            fourPlaying = true;
-         }
-
+         prevUp = event.mouse.y;
          break;
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
          done = true;
