@@ -5,7 +5,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-
+#define KEY_SEEN 1
+#define KEY_RELEASED 2
 using namespace std;
 #define log(x) cout << x;
 void test_init(bool test, string message)
@@ -54,9 +55,6 @@ int main()
    bool done = false;
    bool redraw = true;
    ALLEGRO_EVENT event;
-#define KEY_SEEN 1
-#define KEY_RELEASED 2
-
    unsigned char key[ALLEGRO_KEY_MAX];
    memset(key, 0, sizeof(key));
    int one;
