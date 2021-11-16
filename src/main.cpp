@@ -5,8 +5,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include <string>
-#include <sstream>
 
 using namespace std;
 #define log(x) cout << x;
@@ -44,6 +42,8 @@ int main()
 
    ALLEGRO_BITMAP *uke = al_load_bitmap("images/uke.png");
    test_init(uke, "uke");
+   ALLEGRO_BITMAP *background = al_load_bitmap("images/background.png");
+   test_init(background, "background");
    ALLEGRO_BITMAP *hand = al_load_bitmap("images/hand.png");
    test_init(hand, "hand");
    al_register_event_source(queue, al_get_keyboard_event_source());
@@ -167,7 +167,7 @@ int main()
             one = 9;
          if (key[ALLEGRO_KEY_0])
             one = 10;
-            
+
          if (key[ALLEGRO_KEY_ESCAPE])
             done = true;
          for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
@@ -186,7 +186,8 @@ int main()
       case ALLEGRO_EVENT_MOUSE_AXES:
          x = event.mouse.x;
          y = event.mouse.y;
-         if(prevUp != y){
+         if (prevUp != y)
+         {
             // terrible collision (is this even collision detection?)
             if (y == 283 && x > 300 && x < 1000)
             {
@@ -237,29 +238,23 @@ int main()
 
       if (redraw && al_is_event_queue_empty(queue))
       {
-         al_clear_to_color(al_map_rgb(99, 155, 255));
-
+         al_clear_to_color(al_map_rgb(38, 43, 68));
+         al_draw_bitmap(background,0,0,0);
          al_draw_scaled_bitmap(uke, 0, 0, 900, 750, 10, 100, 1200, 1000, 1);
 
          // Draw Strings
-         al_draw_ellipse(650, 283, 355, .1, al_map_rgb(69, 40, 60), 3);
-         al_draw_ellipse(650, 303, 355, .1, al_map_rgb(69, 40, 60), 3);
-         al_draw_ellipse(650, 323, 355, .1, al_map_rgb(69, 40, 60), 3);
-         al_draw_ellipse(650, 343, 355, .1, al_map_rgb(69, 40, 60), 3);
+         al_draw_ellipse(650, 283, 355, .1, al_map_rgb(139, 155, 180), 3);
+         al_draw_ellipse(650, 303, 355, .1, al_map_rgb(139, 155, 180), 3);
+         al_draw_ellipse(650, 323, 355, .1, al_map_rgb(139, 155, 180), 3);
+         al_draw_ellipse(650, 343, 355, .1, al_map_rgb(139, 155, 180), 3);
 
          // Fret Markers
-         al_draw_filled_circle(275 + one * 40, 283, 10, al_map_rgb(172, 50, 50));
-         al_draw_filled_circle(275 + two * 40, 303, 10, al_map_rgb(172, 50, 50));
-         al_draw_filled_circle(275 + three * 40, 323, 10, al_map_rgb(172, 50, 50));
-         al_draw_filled_circle(275 + four * 40, 343, 10, al_map_rgb(172, 50, 50));
+         al_draw_filled_circle(275 + one * 40, 283, 10, al_map_rgb(228, 59, 68));
+         al_draw_filled_circle(275 + two * 40, 303, 10, al_map_rgb(228, 59, 68));
+         al_draw_filled_circle(275 + three * 40, 323, 10, al_map_rgb(228, 59, 68));
+         al_draw_filled_circle(275 + four * 40, 343, 10, al_map_rgb(228, 59, 68));
 
          al_draw_bitmap(hand, x, y, 0);
-
-         std::stringstream ss;
-         ss << four << three << two << one;
-         std::string strNum = ss.str();
-         const char *c = strNum.c_str();
-         al_draw_textf(font, al_map_rgb(255, 255, 255), 0, 0, 0, c);
 
          al_flip_display();
 
