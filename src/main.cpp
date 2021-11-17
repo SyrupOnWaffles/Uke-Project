@@ -57,6 +57,8 @@ int main()
    test_init(hand, "hand");
    ALLEGRO_BITMAP *dot = al_load_bitmap("images/dot.png");
    test_init(dot, "dot");
+   ALLEGRO_BITMAP *icon = al_load_bitmap("images/windowicon.png");
+   test_init(icon, "icon");
    al_register_event_source(queue, al_get_keyboard_event_source());
    al_register_event_source(queue, al_get_display_event_source(disp));
    al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -84,6 +86,7 @@ int main()
    bool twoPlaying;
    bool onePlaying;
    al_hide_mouse_cursor(disp);
+   al_set_display_icon(disp,icon);
    al_start_timer(timer);
    while (1)
    {
@@ -295,6 +298,7 @@ int main()
    al_destroy_bitmap(uke);
    al_destroy_bitmap(hand);
    al_destroy_bitmap(background);
+   al_destroy_bitmap(icon);
    al_destroy_bitmap(dot);
 
    al_destroy_font(font);
