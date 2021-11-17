@@ -5,10 +5,18 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <math.h>
 #define KEY_SEEN 1
 #define KEY_RELEASED 2
 using namespace std;
 #define log(x) cout << x;
+void draw_sin(int length, float amplitude, int xoffset, int yoffset, ALLEGRO_COLOR colour, float thickness)
+{
+   for (int i = 1; i <= length; i++)
+   {
+      al_draw_filled_circle(floor(i) + xoffset, floor(sin(i) * amplitude + yoffset), thickness, colour);
+   }
+}
 void test_init(bool test, string message)
 {
    if (!test)
@@ -47,6 +55,8 @@ int main()
    test_init(background, "background");
    ALLEGRO_BITMAP *hand = al_load_bitmap("images/hand.png");
    test_init(hand, "hand");
+   ALLEGRO_BITMAP *dot = al_load_bitmap("images/dot.png");
+   test_init(dot, "dot");
    al_register_event_source(queue, al_get_keyboard_event_source());
    al_register_event_source(queue, al_get_display_event_source(disp));
    al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -64,6 +74,11 @@ int main()
    int prevUp;
    int x = 1280;
    int y = 720;
+   float oneVibration = 0;
+   float twoVibration = 0;
+   float threeVibration = 0;
+   float fourVibration = 0;
+
    bool fourPlaying;
    bool threePlaying;
    bool twoPlaying;
@@ -80,6 +95,18 @@ int main()
       {
 
       case ALLEGRO_EVENT_TIMER:
+         oneVibration -= .04;
+         twoVibration -= .04;
+         threeVibration -= .04;
+         fourVibration -= .04;
+         if (oneVibration < 0)
+            oneVibration = 0;
+         if (twoVibration < 0)
+            twoVibration = 0;
+         if (threeVibration < 0)
+            threeVibration = 0;
+         if (fourVibration < 0)
+            fourVibration = 0;
          one = 0;
          two = 0;
          three = 0;
@@ -213,21 +240,25 @@ int main()
       if (fourPlaying)
       {
          al_play_sample(noteSamples[3], 1.0, 0.0, 1.0 + (0.05946 * four), ALLEGRO_PLAYMODE_ONCE, NULL);
+         fourVibration = 4;
          fourPlaying = false;
       }
       if (threePlaying)
       {
          al_play_sample(noteSamples[2], 1.0, 0.0, 1.0 + (0.05946 * three), ALLEGRO_PLAYMODE_ONCE, NULL);
+         threeVibration = 4;
          threePlaying = false;
       }
       if (twoPlaying)
       {
          al_play_sample(noteSamples[1], 1.0, 0.0, 1.0 + (0.05946 * two), ALLEGRO_PLAYMODE_ONCE, NULL);
+         twoVibration = 4;
          twoPlaying = false;
       }
       if (onePlaying)
       {
          al_play_sample(noteSamples[0], 1.0, 0.0, 1.0 + (0.05946 * one), ALLEGRO_PLAYMODE_ONCE, NULL);
+         oneVibration = 4;
          onePlaying = false;
       }
 
@@ -237,20 +268,20 @@ int main()
       if (redraw && al_is_event_queue_empty(queue))
       {
          al_clear_to_color(al_map_rgb(38, 43, 68));
-         al_draw_bitmap(background,0,0,0);
+         al_draw_bitmap(background, 0, 0, 0);
          al_draw_scaled_bitmap(uke, 0, 0, 900, 750, 10, 100, 1200, 1000, 1);
 
          // Draw Strings
-         al_draw_ellipse(650, 283, 355, .1, al_map_rgb(139, 155, 180), 3);
-         al_draw_ellipse(650, 303, 355, .1, al_map_rgb(139, 155, 180), 3);
-         al_draw_ellipse(650, 323, 355, .1, al_map_rgb(139, 155, 180), 3);
-         al_draw_ellipse(650, 343, 355, .1, al_map_rgb(139, 155, 180), 3);
+         draw_sin(710, oneVibration, 295, 283, al_map_rgb(139, 155, 180), 2);
+         draw_sin(710, twoVibration, 295, 303, al_map_rgb(139, 155, 180), 2);
+         draw_sin(710, threeVibration, 295, 323, al_map_rgb(139, 155, 180), 2);
+         draw_sin(710, fourVibration, 295, 343, al_map_rgb(139, 155, 180), 2);
 
          // Fret Markers
-         al_draw_filled_circle(275 + one * 40, 283, 10, al_map_rgb(228, 59, 68));
-         al_draw_filled_circle(275 + two * 40, 303, 10, al_map_rgb(228, 59, 68));
-         al_draw_filled_circle(275 + three * 40, 323, 10, al_map_rgb(228, 59, 68));
-         al_draw_filled_circle(275 + four * 40, 343, 10, al_map_rgb(228, 59, 68));
+         al_draw_bitmap(dot, 265 + one * 40, 273, 0);
+         al_draw_bitmap(dot, 265 + two * 40, 293, 0);
+         al_draw_bitmap(dot, 265 + three * 40, 313, 1);
+         al_draw_bitmap(dot, 265 + four * 40, 333, 2);
 
          al_draw_bitmap(hand, x, y, 0);
 
@@ -263,6 +294,9 @@ int main()
    // Destruction
    al_destroy_bitmap(uke);
    al_destroy_bitmap(hand);
+   al_destroy_bitmap(background);
+   al_destroy_bitmap(dot);
+
    al_destroy_font(font);
    al_destroy_display(disp);
    al_destroy_timer(timer);
