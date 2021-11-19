@@ -34,4 +34,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build
         run: |
-          ./build.sh
+          mkdir build
+          cd build
+          cmake ..
+          make
