@@ -38,7 +38,3 @@ jobs:
           cd build
           cmake ..
           make
-      - name: Run
-        run: | 
-          cd build
-          ./ukulele
