@@ -53,8 +53,6 @@ int main()
    test_init(uke, "uke");
    ALLEGRO_BITMAP *background = al_load_bitmap("images/background.png");
    test_init(background, "background");
-   ALLEGRO_BITMAP *hand = al_load_bitmap("images/hand.png");
-   test_init(hand, "hand");
    ALLEGRO_BITMAP *dot = al_load_bitmap("images/dot.png");
    test_init(dot, "dot");
    ALLEGRO_BITMAP *icon = al_load_bitmap("images/windowicon.png");
@@ -85,7 +83,6 @@ int main()
    bool threePlaying;
    bool twoPlaying;
    bool onePlaying;
-   al_hide_mouse_cursor(disp);
    al_set_display_icon(disp,icon);
    al_start_timer(timer);
    while (1)
@@ -286,8 +283,6 @@ int main()
          al_draw_bitmap(dot, 265 + three * 40, 313, 1);
          al_draw_bitmap(dot, 265 + four * 40, 333, 2);
 
-         al_draw_bitmap(hand, x, y, 0);
-
          al_flip_display();
 
          redraw = false;
@@ -296,7 +291,6 @@ int main()
 
    // Destruction
    al_destroy_bitmap(uke);
-   al_destroy_bitmap(hand);
    al_destroy_bitmap(background);
    al_destroy_bitmap(icon);
    al_destroy_bitmap(dot);
