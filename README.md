@@ -20,7 +20,7 @@ Allegro is the only dependancy
   ```sh
   sudo apt install liballegro5-dev
   ```    
-Your smart you can figure out how to install allegro on different distros or windows 10
+You're smart, you can figure out how to install allegro on different distros or Windows 10
 ## Installation
 This is for unix-like systems
 1. Clone the repo
